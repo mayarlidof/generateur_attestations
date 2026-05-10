@@ -11,6 +11,7 @@ import os
 import zipfile
 import io
 from datetime import date
+from docx2pdf import convert
 
 # --- CONFIGURATION DE LA PAGE ---
 st.set_page_config(
