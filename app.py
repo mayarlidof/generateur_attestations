@@ -1046,35 +1046,15 @@ with tab2:
             else:
                 st.info("Ajoutez plusieurs participants pour activer la génération en masse.")
                 
-        st.markdown("### Conversion PDF")
-        st.warning("⚠️ La conversion PDF nécessite Microsoft Word installé sur la machine.")
-        if st.button("🔄 Convertir en PDF (Nécessite MS Word)"):
-            try:
-                temp_docx = "temp.docx"
-                temp_pdf = "temp.pdf"
-                docx_buf = generate_attestation_docx(data, participant)
-                with open(temp_docx, "wb") as f:
-                    f.write(docx_buf.getbuffer())
-                
-                convert(temp_docx, temp_pdf)
-                
-                with open(temp_pdf, "rb") as f:
-                    pdf_bytes = f.read()
-                
-                st.download_button(
-                    label="⬇️ Télécharger PDF",
-                    data=pdf_bytes,
-                    file_name=f"Attestation_{safe_nom}.pdf",
-                    mime="application/pdf"
-                )
-                
-                os.remove(temp_docx)
-                os.remove(temp_pdf)
-                
-            except Exception as e:
-                st.error(f"Erreur de conversion PDF : {e}. Assurez-vous que MS Word est installé.")
-    else:
-        st.warning("Veuillez d'abord remplir et valider le formulaire dans l'onglet 'Saisie des informations'.")
+        # Message informatif pour la conversion PDF locale
+        st.info("""
+        ✅ **Génération Word uniquement**
+        Les attestations sont générées au format **Word (.docx)**.
+        Pour obtenir un PDF, utilisez un convertisseur local comme :
+        - Microsoft Word (Fichier > Enregistrer sous > PDF)
+        - LibreOffice (Fichier > Exporter au format > PDF)
+        - Un outil en ligne (ex: [SmallPDF](https://smallpdf.com/fr/word-to-pdf))
+        """)
 
 with tab3:
     st.header("Historique des attestations générées")
